@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '@/router'
 import { useAvtentikacijaStore } from '@/stores/avtentikacija'
 
 const odjemalec = axios.create({
@@ -12,5 +13,17 @@ odjemalec.interceptors.request.use((config) => {
   }
   return config
 })
+
+odjemalec.interceptors.response.use(
+  (odgovor) => odgovor,
+  (napaka) => {
+    const jePrijava = napaka.config?.url === '/auth/prijava'
+    if (napaka.response?.status === 401 && !jePrijava) {
+      useAvtentikacijaStore().odjava()
+      router.push({ name: 'prijava' })
+    }
+    return Promise.reject(napaka)
+  },
+)
 
 export default odjemalec
