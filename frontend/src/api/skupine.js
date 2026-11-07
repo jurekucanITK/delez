@@ -1,5 +1,9 @@
 import odjemalec from '@/api/odjemalec'
 
+export function pridobiSkupine() {
+  return odjemalec.get('/skupine')
+}
+
 export function ustvariSkupino({ ime, opis }) {
   return odjemalec.post('/skupine', { ime, opis })
 }
