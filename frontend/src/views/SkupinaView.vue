@@ -2,9 +2,11 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { pridobiSkupino } from '@/api/skupine'
+import ClaniSkupine from '@/components/ClaniSkupine.vue'
 
 const route = useRoute()
 
+const zavihek = ref('clani')
 const skupina = ref(null)
 const napaka = ref('')
 const nalaganje = ref(false)
@@ -35,16 +37,33 @@ watch(() => route.params.id, nalozi, { immediate: true })
 
 <template>
   <v-container class="py-12">
+    <router-link
+      :to="{ name: 'skupine' }"
+      class="d-inline-flex align-center ga-1 text-primary font-weight-bold mb-4"
+    >
+      <v-icon icon="mdi-arrow-left" size="small" />
+      Moje skupine
+    </router-link>
+
     <v-progress-linear v-if="nalaganje" indeterminate color="primary" />
 
     <v-alert v-else-if="napaka" type="error">
       {{ napaka }}
     </v-alert>
 
-    <h1 v-else-if="skupina" class="text-h5 font-weight-bold">{{ skupina.ime }}</h1>
+    <template v-else-if="skupina">
+      <h1 class="text-h5 font-weight-bold mb-6">{{ skupina.ime }}</h1>
 
-    <router-link :to="{ name: 'skupine' }" class="d-inline-block text-primary font-weight-bold mt-6">
-      Nazaj na skupine
-    </router-link>
+      <v-tabs v-model="zavihek" color="primary">
+        <v-tab value="clani">Člani</v-tab>
+      </v-tabs>
+      <v-divider class="mb-6" />
+
+      <v-window v-model="zavihek">
+        <v-window-item value="clani">
+          <ClaniSkupine :skupina-id="skupina.id" :moja-vloga="skupina.vloga" />
+        </v-window-item>
+      </v-window>
+    </template>
   </v-container>
 </template>
