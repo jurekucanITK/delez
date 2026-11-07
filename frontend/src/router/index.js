@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ZacetnaView from '@/views/ZacetnaView.vue'
+import RegistracijaView from '@/views/RegistracijaView.vue'
+import PrijavaView from '@/views/PrijavaView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -8,6 +10,16 @@ const router = createRouter({
       path: '/',
       name: 'zacetna',
       component: ZacetnaView,
+    },
+    {
+      path: '/registracija',
+      name: 'registracija',
+      component: RegistracijaView,
+    },
+    {
+      path: '/prijava',
+      name: 'prijava',
+      component: PrijavaView,
     },
   ],
 })

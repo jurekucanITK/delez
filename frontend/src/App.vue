@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar color="primary" density="comfortable">
+    <v-app-bar>
       <v-app-bar-title>Delež</v-app-bar-title>
     </v-app-bar>
 

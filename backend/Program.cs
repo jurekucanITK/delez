@@ -1,6 +1,8 @@
 using System.Text;
 using Delez.Api.Data;
+using Delez.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -44,7 +46,10 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod()));
 
-builder.Services.AddControllers();
+builder.Services.AddScoped<AvtentikacijaService>();
+
+builder.Services.AddControllers(options =>
+    options.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider()));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
