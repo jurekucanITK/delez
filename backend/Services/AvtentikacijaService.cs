@@ -87,7 +87,7 @@ public class AvtentikacijaService(DelezDbContext db, IConfiguration konfiguracij
         return new JsonWebTokenHandler().CreateToken(opis);
     }
 
-    private static string NormalizirajEmail(string email) => email.Trim().ToLowerInvariant();
+    public static string NormalizirajEmail(string email) => email.Trim().ToLowerInvariant();
 
     private static UporabnikDto VUporabnikDto(Uporabnik uporabnik) =>
         new(uporabnik.Id, uporabnik.Ime, uporabnik.Email);
