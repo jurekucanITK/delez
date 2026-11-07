@@ -1,13 +1,12 @@
 using Delez.Api.Dto;
 using Delez.Api.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Delez.Api.Controllers;
 
 [ApiController]
 [Route("api/skupine")]
-public class SkupineController(SkupineService skupine) : ControllerBase
+public class SkupineController(SkupineService skupine) : SkupinaControllerBase
 {
     [HttpGet]
     [ProducesResponseType<List<SkupinaPovzetekDto>>(StatusCodes.Status200OK)]
@@ -51,18 +50,8 @@ public class SkupineController(SkupineService skupine) : ControllerBase
 
         var rezultat = await skupine.PridobiAsync(uporabnikId, id);
 
-        return rezultat.Stanje switch
-        {
-            StanjeDostopa.NeObstaja => Problem(
-                detail: "Skupina ne obstaja",
-                statusCode: StatusCodes.Status404NotFound),
-            StanjeDostopa.NiClan => Problem(
-                detail: "Nisi član te skupine",
-                statusCode: StatusCodes.Status403Forbidden),
-            _ => Ok(rezultat.Skupina)
-        };
+        return rezultat.Stanje == StanjeDostopa.Uspeh
+            ? Ok(rezultat.Skupina)
+            : OdgovorZaDostop(rezultat.Stanje);
     }
-
-    private bool PreberiUporabnikId(out int uporabnikId) =>
-        int.TryParse(User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value, out uporabnikId);
 }

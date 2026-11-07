@@ -6,16 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Delez.Api.Services;
 
-public enum StanjeDostopa
-{
-    Uspeh,
-    NeObstaja,
-    NiClan
-}
-
 public record RezultatPridobitveSkupine(StanjeDostopa Stanje, SkupinaDto? Skupina);
 
-public class SkupineService(DelezDbContext db)
+public class SkupineService(DelezDbContext db, DostopService dostop)
 {
     public async Task<SkupinaDto> UstvariAsync(int uporabnikId, NovaSkupinaZahtevek zahtevek)
     {
@@ -31,26 +24,20 @@ public class SkupineService(DelezDbContext db)
         db.Skupine.Add(skupina);
         await db.SaveChangesAsync();
 
-        return VSkupinaDto(skupina);
+        return VSkupinaDto(skupina, Vloge.Skrbnik);
     }
 
     public async Task<RezultatPridobitveSkupine> PridobiAsync(int uporabnikId, int skupinaId)
     {
-        var skupina = await db.Skupine.AsNoTracking().SingleOrDefaultAsync(s => s.Id == skupinaId);
+        var rezultat = await dostop.PreveriAsync(uporabnikId, skupinaId);
 
-        if (skupina is null)
+        if (rezultat.Stanje != StanjeDostopa.Uspeh)
         {
-            return new RezultatPridobitveSkupine(StanjeDostopa.NeObstaja, null);
+            return new RezultatPridobitveSkupine(rezultat.Stanje, null);
         }
 
-        var jeClan = await db.Clanstva.AnyAsync(c => c.SkupinaId == skupinaId && c.UporabnikId == uporabnikId);
-
-        if (!jeClan)
-        {
-            return new RezultatPridobitveSkupine(StanjeDostopa.NiClan, null);
-        }
-
-        return new RezultatPridobitveSkupine(StanjeDostopa.Uspeh, VSkupinaDto(skupina));
+        var clanstvo = rezultat.Clanstvo!;
+        return new RezultatPridobitveSkupine(StanjeDostopa.Uspeh, VSkupinaDto(clanstvo.Skupina, clanstvo.Vloga));
     }
 
     public async Task<List<SkupinaPovzetekDto>> SeznamAsync(int uporabnikId)
@@ -98,6 +85,6 @@ public class SkupineService(DelezDbContext db)
             .ToList();
     }
 
-    private static SkupinaDto VSkupinaDto(Skupina skupina) =>
-        new(skupina.Id, skupina.Ime, skupina.Opis);
+    private static SkupinaDto VSkupinaDto(Skupina skupina, string vloga) =>
+        new(skupina.Id, skupina.Ime, skupina.Opis, vloga);
 }
