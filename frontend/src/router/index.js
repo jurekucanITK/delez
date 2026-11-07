@@ -4,6 +4,8 @@ import ZacetnaView from '@/views/ZacetnaView.vue'
 import RegistracijaView from '@/views/RegistracijaView.vue'
 import PrijavaView from '@/views/PrijavaView.vue'
 import SkupineView from '@/views/SkupineView.vue'
+import NovaSkupinaView from '@/views/NovaSkupinaView.vue'
+import SkupinaView from '@/views/SkupinaView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -27,6 +29,18 @@ const router = createRouter({
       path: '/skupine',
       name: 'skupine',
       component: SkupineView,
+      meta: { zahtevaPrijavo: true },
+    },
+    {
+      path: '/skupine/nova',
+      name: 'nova-skupina',
+      component: NovaSkupinaView,
+      meta: { zahtevaPrijavo: true },
+    },
+    {
+      path: '/skupine/:id(\\d+)',
+      name: 'skupina',
+      component: SkupinaView,
       meta: { zahtevaPrijavo: true },
     },
   ],
