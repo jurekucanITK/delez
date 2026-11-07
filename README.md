@@ -15,10 +15,39 @@ Delež je spletna aplikacija za beleženje in delitev skupnih stroškov v gospod
 ## Struktura repozitorija
 
 ```
-├── frontend/   # Vue 3 SPA
-├── backend/    # ASP.NET Core Web API
-└── docs/       # projektna dokumentacija
+├── frontend/         # Vue 3 SPA
+├── backend/          # ASP.NET Core Web API
+├── docs/             # projektna dokumentacija
+├── docker-compose.yml
+└── Delez.slnx
 ```
+
+## Zagon
+
+1. Zaženi bazo:
+
+   ```
+   cp .env.example .env
+   docker compose up -d
+   ```
+
+2. Ustvari tabele in zaženi backend:
+
+   ```
+   dotnet tool restore
+   dotnet ef database update --project backend
+   dotnet run --project backend
+   ```
+
+3. V novem terminalu zaženi frontend:
+
+   ```
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+4. Odpri http://localhost:5173.
 
 ## Dokumentacija
 
