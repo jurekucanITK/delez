@@ -2,6 +2,7 @@ using System.Text;
 using Delez.Api.Data;
 using Delez.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +37,8 @@ builder.Services
             ClockSkew = TimeSpan.FromMinutes(1)
         };
     });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder()
+    .SetFallbackPolicy(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
 
 const string CorsPolitika = "Frontend";
 var dovoljeniIzvori = builder.Configuration.GetSection("Cors:DovoljeniIzvori").Get<string[]>() ?? [];
