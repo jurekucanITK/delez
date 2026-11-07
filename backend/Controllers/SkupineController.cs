@@ -9,6 +9,19 @@ namespace Delez.Api.Controllers;
 [Route("api/skupine")]
 public class SkupineController(SkupineService skupine) : ControllerBase
 {
+    [HttpGet]
+    [ProducesResponseType<List<SkupinaPovzetekDto>>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Seznam()
+    {
+        if (!PreberiUporabnikId(out var uporabnikId))
+        {
+            return Unauthorized();
+        }
+
+        return Ok(await skupine.SeznamAsync(uporabnikId));
+    }
+
     [HttpPost]
     [ProducesResponseType<SkupinaDto>(StatusCodes.Status201Created)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
