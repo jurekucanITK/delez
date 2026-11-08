@@ -28,6 +28,10 @@ export function pridobiStanja(id) {
   return odjemalec.get(`/skupine/${id}/stanja`)
 }
 
+export function dodajNakazilo(id, { placnikId, prejemnikId, znesek, datum }) {
+  return odjemalec.post(`/skupine/${id}/nakazila`, { placnikId, prejemnikId, znesek, datum })
+}
+
 export function dodajStrosek(id, { opis, znesek, datum, placnikId, claniIds }) {
   return odjemalec.post(`/skupine/${id}/stroski`, { opis, znesek, datum, placnikId, claniIds })
 }

@@ -7,6 +7,8 @@ const props = defineProps({
   mojaVloga: { type: String, required: true },
 })
 
+const emit = defineEmits(['nakazilo'])
+
 const lahkoVnasa = computed(() => props.mojaVloga !== 'omejen')
 
 const stroski = ref([])
@@ -47,14 +49,16 @@ watch(() => props.skupinaId, nalozi, { immediate: true })
 <template>
   <div class="d-flex align-center justify-space-between flex-wrap ga-3 mb-4">
     <h2 class="text-h6 font-weight-bold">Stroški</h2>
-    <v-btn
-      v-if="lahkoVnasa"
-      color="primary"
-      prepend-icon="mdi-plus"
-      :to="{ name: 'nov-strosek', params: { id: skupinaId } }"
-    >
-      Nov strošek
-    </v-btn>
+    <div v-if="lahkoVnasa" class="d-flex flex-wrap ga-2">
+      <v-btn
+        color="primary"
+        prepend-icon="mdi-plus"
+        :to="{ name: 'nov-strosek', params: { id: skupinaId } }"
+      >
+        Nov strošek
+      </v-btn>
+      <v-btn variant="outlined" @click="emit('nakazilo')">Nakazilo</v-btn>
+    </div>
   </div>
 
   <v-card>

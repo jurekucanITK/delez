@@ -2,6 +2,7 @@
 import { computed, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { dodajStrosek, pridobiClane, pridobiSkupino } from '@/api/skupine'
+import { pravilaZneska, preberiZnesek } from '@/utils/znesek'
 
 const route = useRoute()
 const router = useRouter()
@@ -27,24 +28,12 @@ const moznostiPlacnika = computed(() =>
     .map((c) => ({ value: c.id, title: `${c.ime} (${c.email})` })),
 )
 
-const VZOREC_ZNESKA = /^\d+([.,]\d+)?$/
-
-function preberiZnesek(v) {
-  return Number(v.trim().replace(',', '.'))
-}
-
 const pravila = {
   opis: [
     (v) => !!v?.trim() || 'Opis je obvezen',
     (v) => v.trim().length <= 200 || 'Opis je lahko dolg največ 200 znakov',
   ],
-  znesek: [
-    (v) => !!v?.trim() || 'Znesek je obvezen',
-    (v) => VZOREC_ZNESKA.test(v.trim()) || 'Vnesi znesek kot število, na primer 12,50',
-    (v) => preberiZnesek(v) > 0 || 'Znesek mora biti večji od 0,00 €',
-    (v) => /^\d+([.,]\d{1,2})?$/.test(v.trim()) || 'Znesek ima lahko največ dve decimalki',
-    (v) => preberiZnesek(v) <= 99999999.99 || 'Znesek je lahko največ 99.999.999,99 €',
-  ],
+  znesek: pravilaZneska,
   datum: [(v) => !!v || 'Datum je obvezen'],
   placnikId: [(v) => v !== null || 'Plačnik je obvezen'],
 }
