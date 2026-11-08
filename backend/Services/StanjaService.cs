@@ -60,4 +60,27 @@ public class StanjaService(DelezDbContext db)
             .Select(c => new StanjeClanaDto(c.Id, c.Ime, c.Email, stanja.GetValueOrDefault(c.Id)))
             .ToList();
     }
+
+    public async Task<List<PredlogNakazilaDto>> PredlogNakazilAsync(int skupinaId)
+    {
+        var stanja = await IzracunajAsync([skupinaId]);
+        var predlog = PredlogNakazil.Izracunaj(stanja);
+
+        var clani = await db.Clanstva
+            .AsNoTracking()
+            .Where(c => c.SkupinaId == skupinaId)
+            .Select(c => new { c.Id, c.Uporabnik.Ime, c.Uporabnik.Email })
+            .ToDictionaryAsync(c => c.Id);
+
+        return predlog
+            .Select(p => new PredlogNakazilaDto(
+                p.PlacnikId,
+                clani[p.PlacnikId].Ime,
+                clani[p.PlacnikId].Email,
+                p.PrejemnikId,
+                clani[p.PrejemnikId].Ime,
+                clani[p.PrejemnikId].Email,
+                p.Znesek))
+            .ToList();
+    }
 }
