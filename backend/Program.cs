@@ -49,7 +49,9 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()));
 
 builder.Services.AddScoped<AvtentikacijaService>();
+builder.Services.AddScoped<DostopService>();
 builder.Services.AddScoped<SkupineService>();
+builder.Services.AddScoped<ClaniService>();
 
 builder.Services.AddControllers(options =>
     options.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider()));

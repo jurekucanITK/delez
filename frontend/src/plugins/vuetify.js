@@ -53,6 +53,11 @@ export default createVuetify({
       color: 'primary',
       rounded: 'lg',
     },
+    VSelect: {
+      variant: 'outlined',
+      color: 'primary',
+      rounded: 'lg',
+    },
     VBtn: {
       rounded: 'lg',
       class: 'text-none font-weight-bold',
