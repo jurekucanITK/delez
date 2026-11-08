@@ -24,6 +24,6 @@ export function pridobiStroske(id) {
   return odjemalec.get(`/skupine/${id}/stroski`)
 }
 
-export function dodajStrosek(id, { opis, znesek, datum, placnikId }) {
-  return odjemalec.post(`/skupine/${id}/stroski`, { opis, znesek, datum, placnikId })
+export function dodajStrosek(id, { opis, znesek, datum, placnikId, claniIds }) {
+  return odjemalec.post(`/skupine/${id}/stroski`, { opis, znesek, datum, placnikId, claniIds })
 }
