@@ -39,3 +39,21 @@ export function dodajNakazilo(id, { placnikId, prejemnikId, znesek, datum }) {
 export function dodajStrosek(id, { opis, znesek, datum, placnikId, claniIds }) {
   return odjemalec.post(`/skupine/${id}/stroski`, { opis, znesek, datum, placnikId, claniIds })
 }
+
+export function pridobiStrosek(id, strosekId) {
+  return odjemalec.get(`/skupine/${id}/stroski/${strosekId}`)
+}
+
+export function urediStrosek(id, strosekId, { opis, znesek, datum, placnikId, claniIds }) {
+  return odjemalec.put(`/skupine/${id}/stroski/${strosekId}`, {
+    opis,
+    znesek,
+    datum,
+    placnikId,
+    claniIds,
+  })
+}
+
+export function izbrisiStrosek(id, strosekId) {
+  return odjemalec.delete(`/skupine/${id}/stroski/${strosekId}`)
+}

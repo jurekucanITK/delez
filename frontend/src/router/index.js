@@ -50,6 +50,12 @@ const router = createRouter({
       component: NovStrosekView,
       meta: { zahtevaPrijavo: true },
     },
+    {
+      path: '/skupine/:id(\\d+)/stroski/:strosekId(\\d+)/uredi',
+      name: 'uredi-strosek',
+      component: NovStrosekView,
+      meta: { zahtevaPrijavo: true },
+    },
   ],
 })
 

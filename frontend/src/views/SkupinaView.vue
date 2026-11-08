@@ -95,8 +95,10 @@ watch(() => route.params.id, nalozi, { immediate: true })
             <v-col cols="12" md="8">
               <StroskiSkupine
                 :skupina-id="skupina.id"
+                :moje-clanstvo-id="skupina.clanstvoId"
                 :moja-vloga="skupina.vloga"
                 @nakazilo="odpriNakazilo()"
+                @spremenjeno="osveziPregled"
               />
             </v-col>
           </v-row>
