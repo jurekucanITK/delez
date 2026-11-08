@@ -24,7 +24,7 @@ public class SkupineService(DelezDbContext db, DostopService dostop)
         db.Skupine.Add(skupina);
         await db.SaveChangesAsync();
 
-        return VSkupinaDto(skupina, Vloge.Skrbnik);
+        return VSkupinaDto(skupina, skupina.Clanstva[0]);
     }
 
     public async Task<RezultatPridobitveSkupine> PridobiAsync(int uporabnikId, int skupinaId)
@@ -37,7 +37,7 @@ public class SkupineService(DelezDbContext db, DostopService dostop)
         }
 
         var clanstvo = rezultat.Clanstvo!;
-        return new RezultatPridobitveSkupine(StanjeDostopa.Uspeh, VSkupinaDto(clanstvo.Skupina, clanstvo.Vloga));
+        return new RezultatPridobitveSkupine(StanjeDostopa.Uspeh, VSkupinaDto(clanstvo.Skupina, clanstvo));
     }
 
     public async Task<List<SkupinaPovzetekDto>> SeznamAsync(int uporabnikId)
@@ -85,6 +85,6 @@ public class SkupineService(DelezDbContext db, DostopService dostop)
             .ToList();
     }
 
-    private static SkupinaDto VSkupinaDto(Skupina skupina, string vloga) =>
-        new(skupina.Id, skupina.Ime, skupina.Opis, vloga);
+    private static SkupinaDto VSkupinaDto(Skupina skupina, Clanstvo clanstvo) =>
+        new(skupina.Id, skupina.Ime, skupina.Opis, clanstvo.Vloga, clanstvo.Id);
 }
