@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { pridobiSkupino } from '@/api/skupine'
 import ClaniSkupine from '@/components/ClaniSkupine.vue'
 import NakaziloDialog from '@/components/NakaziloDialog.vue'
+import PredlogNakazil from '@/components/PredlogNakazil.vue'
 import StanjaClanov from '@/components/StanjaClanov.vue'
 import StroskiSkupine from '@/components/StroskiSkupine.vue'
 
@@ -81,6 +82,14 @@ watch(() => route.params.id, nalozi, { immediate: true })
                 :skupina-id="skupina.id"
                 :moje-clanstvo-id="skupina.clanstvoId"
                 :osvezitev="osvezitev"
+              />
+              <PredlogNakazil
+                class="mt-6"
+                :skupina-id="skupina.id"
+                :moje-clanstvo-id="skupina.clanstvoId"
+                :moja-vloga="skupina.vloga"
+                :osvezitev="osvezitev"
+                @zabelezi="odpriNakazilo"
               />
             </v-col>
             <v-col cols="12" md="8">
