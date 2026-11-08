@@ -19,3 +19,11 @@ export function pridobiClane(id) {
 export function dodajClana(id, { email, vloga }) {
   return odjemalec.post(`/skupine/${id}/clani`, { email, vloga })
 }
+
+export function pridobiStroske(id) {
+  return odjemalec.get(`/skupine/${id}/stroski`)
+}
+
+export function dodajStrosek(id, { opis, znesek, datum, placnikId }) {
+  return odjemalec.post(`/skupine/${id}/stroski`, { opis, znesek, datum, placnikId })
+}
