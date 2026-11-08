@@ -27,7 +27,7 @@ public class StroskiController(DostopService dostop, StroskiService stroski) : S
             return OdgovorZaDostop(rezultat.Stanje);
         }
 
-        return Ok(await stroski.SeznamAsync(id));
+        return Ok(await stroski.SeznamAsync(id, rezultat.Clanstvo!.Id));
     }
 
     [HttpPost]
@@ -53,11 +53,18 @@ public class StroskiController(DostopService dostop, StroskiService stroski) : S
 
         if (rezultat.Napaka is { } napaka)
         {
-            ModelState.AddModelError("placnikId", napaka switch
+            if (napaka == NapakaDodajanjaStroska.ClanNiVSkupini)
             {
-                NapakaDodajanjaStroska.SamoSebe => "Kot plačnika lahko izbereš samo sebe",
-                _ => "Plačnik ni član skupine"
-            });
+                ModelState.AddModelError("claniIds", "Izbrani član ni član skupine");
+            }
+            else
+            {
+                ModelState.AddModelError("placnikId", napaka switch
+                {
+                    NapakaDodajanjaStroska.SamoSebe => "Kot plačnika lahko izbereš samo sebe",
+                    _ => "Plačnik ni član skupine"
+                });
+            }
             return ValidationProblem(ModelState);
         }
 

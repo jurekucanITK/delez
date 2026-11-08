@@ -76,6 +76,7 @@ watch(() => props.skupinaId, nalozi, { immediate: true })
           <th>Opis</th>
           <th>Plačal</th>
           <th class="text-end">Znesek</th>
+          <th class="text-end">Moj delež</th>
         </tr>
       </thead>
       <tbody>
@@ -84,6 +85,9 @@ watch(() => props.skupinaId, nalozi, { immediate: true })
           <td>{{ strosek.opis }}</td>
           <td class="text-no-wrap">{{ strosek.placnikIme }}</td>
           <td class="text-end text-no-wrap font-weight-bold">{{ prikaziZnesek(strosek.znesek) }}</td>
+          <td class="text-end text-no-wrap">
+            {{ strosek.mojDelez === null ? '' : prikaziZnesek(strosek.mojDelez) }}
+          </td>
         </tr>
       </tbody>
     </v-table>

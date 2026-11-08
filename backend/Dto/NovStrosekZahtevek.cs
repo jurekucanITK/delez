@@ -17,4 +17,8 @@ public class NovStrosekZahtevek
 
     [Required(ErrorMessage = "Plačnik je obvezen")]
     public int? PlacnikId { get; set; }
+
+    [Required(ErrorMessage = "Izberite vsaj enega člana")]
+    [MinLength(1, ErrorMessage = "Izberite vsaj enega člana")]
+    public List<int>? ClaniIds { get; set; }
 }
