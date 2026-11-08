@@ -1,8 +1,14 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { dodajStrosek, pridobiClane, pridobiSkupino } from '@/api/skupine'
-import { pravilaZneska, preberiZnesek } from '@/utils/znesek'
+import {
+  dodajStrosek,
+  pridobiClane,
+  pridobiSkupino,
+  pridobiStrosek,
+  urediStrosek,
+} from '@/api/skupine'
+import { pravilaZneska, preberiZnesek, vnosZneska } from '@/utils/znesek'
 
 const route = useRoute()
 const router = useRouter()
@@ -19,6 +25,9 @@ const napake = reactive({ opis: [], znesek: [], datum: [], placnikid: [], clanii
 const splosnaNapaka = ref('')
 const posiljanje = ref(false)
 
+const tujStrosek = ref(false)
+
+const jeUrejanje = computed(() => route.params.strosekId !== undefined)
 const jeSkrbnik = computed(() => skupina.value?.vloga === 'skrbnik')
 const jeOmejen = computed(() => skupina.value?.vloga === 'omejen')
 
@@ -86,18 +95,41 @@ function danes() {
   return `${d.getFullYear()}-${mesec}-${dan}`
 }
 
-async function nalozi(id) {
+async function nalozi([id, strosekId]) {
   skupina.value = null
   clani.value = []
   izbrani.value = []
+  tujStrosek.value = false
+  Object.assign(podatki, { opis: '', znesek: '', datum: danes(), placnikId: null })
+  for (const polje of Object.keys(napake)) {
+    napake[polje] = []
+  }
+  splosnaNapaka.value = ''
   napakaNalaganja.value = ''
   nalaganje.value = true
   try {
     const [odgovorSkupine, odgovorClanov] = await Promise.all([pridobiSkupino(id), pridobiClane(id)])
-    skupina.value = odgovorSkupine.data
     clani.value = odgovorClanov.data
-    izbrani.value = odgovorClanov.data.map((c) => c.id)
-    podatki.placnikId = odgovorSkupine.data.clanstvoId
+    if (strosekId === undefined) {
+      izbrani.value = odgovorClanov.data.map((c) => c.id)
+      podatki.placnikId = odgovorSkupine.data.clanstvoId
+    } else {
+      const zahtevaStroska = await naloziStrosek(id, strosekId)
+      if (!zahtevaStroska) {
+        return
+      }
+      const { data: strosek } = zahtevaStroska
+      Object.assign(podatki, {
+        opis: strosek.opis,
+        znesek: vnosZneska(strosek.znesek),
+        datum: strosek.datum,
+        placnikId: strosek.placnikId,
+      })
+      izbrani.value = strosek.claniIds
+      tujStrosek.value =
+        odgovorSkupine.data.vloga === 'clan' && strosek.placnikId !== odgovorSkupine.data.clanstvoId
+    }
+    skupina.value = odgovorSkupine.data
   } catch (e) {
     const status = e.response?.status
     if (status === 404) {
@@ -109,6 +141,20 @@ async function nalozi(id) {
     }
   } finally {
     nalaganje.value = false
+  }
+}
+
+async function naloziStrosek(id, strosekId) {
+  try {
+    return await pridobiStrosek(id, strosekId)
+  } catch (e) {
+    const status = e.response?.status
+    if (status === 404) {
+      napakaNalaganja.value = 'Strošek ne obstaja.'
+    } else if (status !== 401) {
+      napakaNalaganja.value = 'Stroška ni bilo mogoče naložiti. Preveri povezavo in poskusi znova.'
+    }
+    return null
   }
 }
 
@@ -137,14 +183,19 @@ async function poslji() {
   }
 
   posiljanje.value = true
+  const strosek = {
+    opis: podatki.opis.trim(),
+    znesek: preberiZnesek(podatki.znesek),
+    datum: podatki.datum,
+    placnikId: podatki.placnikId,
+    claniIds: izbrani.value,
+  }
   try {
-    await dodajStrosek(route.params.id, {
-      opis: podatki.opis.trim(),
-      znesek: preberiZnesek(podatki.znesek),
-      datum: podatki.datum,
-      placnikId: podatki.placnikId,
-      claniIds: izbrani.value,
-    })
+    if (jeUrejanje.value) {
+      await urediStrosek(route.params.id, route.params.strosekId, strosek)
+    } else {
+      await dodajStrosek(route.params.id, strosek)
+    }
     nazaj()
   } catch (napaka) {
     const status = napaka.response?.status
@@ -155,7 +206,11 @@ async function poslji() {
     if (errors) {
       nastaviNapakeIzApi(errors)
     } else if (status === 403) {
-      splosnaNapaka.value = 'Omejen član ne more vnašati stroškov.'
+      splosnaNapaka.value = jeUrejanje.value
+        ? 'Urejaš lahko samo stroške, ki si jih plačal sam.'
+        : 'Omejen član ne more vnašati stroškov.'
+    } else if (status === 404 && jeUrejanje.value) {
+      splosnaNapaka.value = 'Strošek ne obstaja.'
     } else {
       splosnaNapaka.value = 'Stroška ni bilo mogoče shraniti. Preveri povezavo in poskusi znova.'
     }
@@ -164,7 +219,7 @@ async function poslji() {
   }
 }
 
-watch(() => route.params.id, nalozi, { immediate: true })
+watch(() => [route.params.id, route.params.strosekId], nalozi, { immediate: true })
 </script>
 
 <template>
@@ -186,11 +241,17 @@ watch(() => route.params.id, nalozi, { immediate: true })
         </v-alert>
 
         <v-alert v-else-if="jeOmejen" type="info">
-          Omejen član ne more vnašati stroškov.
+          {{ jeUrejanje ? 'Omejen član ne more urejati stroškov.' : 'Omejen član ne more vnašati stroškov.' }}
+        </v-alert>
+
+        <v-alert v-else-if="tujStrosek" type="info">
+          Urejaš lahko samo stroške, ki si jih plačal sam.
         </v-alert>
 
         <template v-else-if="skupina">
-          <h1 class="text-h5 font-weight-bold mb-6">Nov strošek</h1>
+          <h1 class="text-h5 font-weight-bold mb-6">
+            {{ jeUrejanje ? 'Uredi strošek' : 'Nov strošek' }}
+          </h1>
 
           <v-alert v-if="splosnaNapaka" type="error" class="mb-4">
             {{ splosnaNapaka }}
@@ -309,7 +370,7 @@ watch(() => route.params.id, nalozi, { immediate: true })
                       :loading="posiljanje"
                       :disabled="nihceNiIzbran"
                     >
-                      Shrani strošek
+                      {{ jeUrejanje ? 'Shrani spremembe' : 'Shrani strošek' }}
                     </v-btn>
                     <v-btn variant="text" size="large" @click="nazaj">Prekliči</v-btn>
                   </div>
