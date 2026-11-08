@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { pridobiSkupino } from '@/api/skupine'
 import ClaniSkupine from '@/components/ClaniSkupine.vue'
+import NakaziloDialog from '@/components/NakaziloDialog.vue'
 import StanjaClanov from '@/components/StanjaClanov.vue'
 import StroskiSkupine from '@/components/StroskiSkupine.vue'
 
@@ -13,9 +14,14 @@ const skupina = ref(null)
 const napaka = ref('')
 const nalaganje = ref(false)
 const osvezitev = ref(0)
+const nakaziloDialog = ref(null)
 
 function osveziPregled() {
   osvezitev.value++
+}
+
+function odpriNakazilo(predizpolnjeno) {
+  nakaziloDialog.value.odpri(predizpolnjeno)
 }
 
 async function nalozi(id) {
@@ -78,7 +84,11 @@ watch(() => route.params.id, nalozi, { immediate: true })
               />
             </v-col>
             <v-col cols="12" md="8">
-              <StroskiSkupine :skupina-id="skupina.id" :moja-vloga="skupina.vloga" />
+              <StroskiSkupine
+                :skupina-id="skupina.id"
+                :moja-vloga="skupina.vloga"
+                @nakazilo="odpriNakazilo()"
+              />
             </v-col>
           </v-row>
         </v-window-item>
@@ -86,6 +96,15 @@ watch(() => route.params.id, nalozi, { immediate: true })
           <ClaniSkupine :skupina-id="skupina.id" :moja-vloga="skupina.vloga" />
         </v-window-item>
       </v-window>
+
+      <NakaziloDialog
+        v-if="skupina.vloga !== 'omejen'"
+        ref="nakaziloDialog"
+        :skupina-id="skupina.id"
+        :moje-clanstvo-id="skupina.clanstvoId"
+        :moja-vloga="skupina.vloga"
+        @shranjeno="osveziPregled"
+      />
     </template>
   </v-container>
 </template>
