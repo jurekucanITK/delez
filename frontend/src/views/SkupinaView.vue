@@ -3,10 +3,11 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { pridobiSkupino } from '@/api/skupine'
 import ClaniSkupine from '@/components/ClaniSkupine.vue'
+import StroskiSkupine from '@/components/StroskiSkupine.vue'
 
 const route = useRoute()
 
-const zavihek = ref('clani')
+const zavihek = ref('pregled')
 const skupina = ref(null)
 const napaka = ref('')
 const nalaganje = ref(false)
@@ -55,11 +56,15 @@ watch(() => route.params.id, nalozi, { immediate: true })
       <h1 class="text-h5 font-weight-bold mb-6">{{ skupina.ime }}</h1>
 
       <v-tabs v-model="zavihek" color="primary">
+        <v-tab value="pregled">Pregled</v-tab>
         <v-tab value="clani">Člani</v-tab>
       </v-tabs>
       <v-divider class="mb-6" />
 
       <v-window v-model="zavihek">
+        <v-window-item value="pregled">
+          <StroskiSkupine :skupina-id="skupina.id" :moja-vloga="skupina.vloga" />
+        </v-window-item>
         <v-window-item value="clani">
           <ClaniSkupine :skupina-id="skupina.id" :moja-vloga="skupina.vloga" />
         </v-window-item>
