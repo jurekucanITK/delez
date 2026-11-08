@@ -53,6 +53,7 @@ builder.Services.AddScoped<DostopService>();
 builder.Services.AddScoped<SkupineService>();
 builder.Services.AddScoped<ClaniService>();
 builder.Services.AddScoped<StroskiService>();
+builder.Services.AddScoped<StanjaService>();
 
 builder.Services.AddControllers(options =>
     options.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider()));
