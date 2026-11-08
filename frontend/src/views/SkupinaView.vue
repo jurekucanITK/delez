@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { pridobiSkupino } from '@/api/skupine'
 import ClaniSkupine from '@/components/ClaniSkupine.vue'
+import StanjaClanov from '@/components/StanjaClanov.vue'
 import StroskiSkupine from '@/components/StroskiSkupine.vue'
 
 const route = useRoute()
@@ -11,6 +12,11 @@ const zavihek = ref('pregled')
 const skupina = ref(null)
 const napaka = ref('')
 const nalaganje = ref(false)
+const osvezitev = ref(0)
+
+function osveziPregled() {
+  osvezitev.value++
+}
 
 async function nalozi(id) {
   skupina.value = null
@@ -63,7 +69,18 @@ watch(() => route.params.id, nalozi, { immediate: true })
 
       <v-window v-model="zavihek">
         <v-window-item value="pregled">
-          <StroskiSkupine :skupina-id="skupina.id" :moja-vloga="skupina.vloga" />
+          <v-row>
+            <v-col cols="12" md="4">
+              <StanjaClanov
+                :skupina-id="skupina.id"
+                :moje-clanstvo-id="skupina.clanstvoId"
+                :osvezitev="osvezitev"
+              />
+            </v-col>
+            <v-col cols="12" md="8">
+              <StroskiSkupine :skupina-id="skupina.id" :moja-vloga="skupina.vloga" />
+            </v-col>
+          </v-row>
         </v-window-item>
         <v-window-item value="clani">
           <ClaniSkupine :skupina-id="skupina.id" :moja-vloga="skupina.vloga" />

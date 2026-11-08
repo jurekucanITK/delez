@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { pridobiJaz } from '@/api/avtentikacija'
 import { pridobiSkupine } from '@/api/skupine'
+import { barvaStanja, oblikujStanje } from '@/utils/stanje'
 
 const imenaVlog = {
   skrbnik: 'Skrbnik',
@@ -9,24 +10,9 @@ const imenaVlog = {
   omejen: 'Omejen član',
 }
 
-const evri = new Intl.NumberFormat('sl-SI', { style: 'currency', currency: 'EUR' })
-
 const skupine = ref([])
 const napaka = ref('')
 const nalaganje = ref(true)
-
-function oblikujStanje(stanje) {
-  const znesek = evri.format(Math.abs(stanje))
-  if (stanje > 0) return `+ ${znesek}`
-  if (stanje < 0) return `− ${znesek}`
-  return znesek
-}
-
-function barvaStanja(stanje) {
-  if (stanje > 0) return 'text-success'
-  if (stanje < 0) return 'text-secondary'
-  return ''
-}
 
 function opisStanja(stanje) {
   if (stanje > 0) return 'vam pripada'

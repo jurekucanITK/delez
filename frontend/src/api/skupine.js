@@ -24,6 +24,10 @@ export function pridobiStroske(id) {
   return odjemalec.get(`/skupine/${id}/stroski`)
 }
 
+export function pridobiStanja(id) {
+  return odjemalec.get(`/skupine/${id}/stanja`)
+}
+
 export function dodajStrosek(id, { opis, znesek, datum, placnikId, claniIds }) {
   return odjemalec.post(`/skupine/${id}/stroski`, { opis, znesek, datum, placnikId, claniIds })
 }
