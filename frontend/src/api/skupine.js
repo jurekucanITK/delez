@@ -32,8 +32,25 @@ export function pridobiPredlogNakazil(id) {
   return odjemalec.get(`/skupine/${id}/predlog-nakazil`)
 }
 
+export function pridobiNakazila(id) {
+  return odjemalec.get(`/skupine/${id}/nakazila`)
+}
+
 export function dodajNakazilo(id, { placnikId, prejemnikId, znesek, datum }) {
   return odjemalec.post(`/skupine/${id}/nakazila`, { placnikId, prejemnikId, znesek, datum })
+}
+
+export function urediNakazilo(id, nakaziloId, { placnikId, prejemnikId, znesek, datum }) {
+  return odjemalec.put(`/skupine/${id}/nakazila/${nakaziloId}`, {
+    placnikId,
+    prejemnikId,
+    znesek,
+    datum,
+  })
+}
+
+export function izbrisiNakazilo(id, nakaziloId) {
+  return odjemalec.delete(`/skupine/${id}/nakazila/${nakaziloId}`)
 }
 
 export function dodajStrosek(id, { opis, znesek, datum, placnikId, claniIds }) {
