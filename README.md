@@ -24,14 +24,23 @@ Delež je spletna aplikacija za beleženje in delitev skupnih stroškov v gospod
 
 ## Zagon
 
-1. Zaženi bazo:
+Potrebuješ [.NET 10 SDK](https://dotnet.microsoft.com/download), [Node.js](https://nodejs.org) 22 ali novejši in [Docker Desktop](https://www.docker.com/products/docker-desktop).
+
+1. Kloniraj repozitorij:
+
+   ```
+   git clone https://github.com/jurekucanITK/delez.git
+   cd delez
+   ```
+
+2. Zaženi bazo:
 
    ```
    cp .env.example .env
    docker compose up -d
    ```
 
-2. Ustvari tabele in zaženi backend:
+3. Ustvari tabele in zaženi backend:
 
    ```
    dotnet tool restore
@@ -39,7 +48,7 @@ Delež je spletna aplikacija za beleženje in delitev skupnih stroškov v gospod
    dotnet run --project backend
    ```
 
-3. V novem terminalu zaženi frontend:
+4. V novem terminalu zaženi frontend:
 
    ```
    cd frontend
@@ -47,7 +56,9 @@ Delež je spletna aplikacija za beleženje in delitev skupnih stroškov v gospod
    npm run dev
    ```
 
-4. Odpri http://localhost:5173.
+Aplikacija teče na http://localhost:5173, Swagger UI pa na http://localhost:5000/swagger. Nastavitve za lokalni razvoj so že v `backend/appsettings.Development.json`, zato dodatna konfiguracija ni potrebna.
+
+Ob naslednjih zagonih zadostujejo `docker compose up -d`, `dotnet run --project backend` in `npm run dev`. Ko potegneš nove spremembe, ponovno poženi `dotnet ef database update --project backend` in `npm install`.
 
 ## Dokumentacija
 
