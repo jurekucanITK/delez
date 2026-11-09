@@ -164,6 +164,9 @@
 3. Po shranjevanju se nakazilo takoj upošteva pri stanju plačnika, ki se mu stanje poveča in prejemnika, ki se mu stanje zmanjša in se prikaže v zgodovini skupine.
 4. Če je plačnik ali prejemnik izven skupine, backend zahtevek zavrne s statusom 400.
 5. Omejen član nakazil ne more beležiti, vidi pa nakazila, ki jih mora opraviti.
+6. Na strani skupine je seznam zabeleženih nakazil z datumom, plačnikom, prejemnikom in zneskom, urejen po datumu padajoče.
+7. Član vidi gumba "Uredi" in "Izbriši" samo pri nakazilih, ki jih je plačal sam. Skrbnik ju vidi pri vseh nakazilih v skupini. Če član ali omejen član s klicem API-ja poskuša urediti ali izbrisati nakazilo, za katerega nima pravic, backend vrne status 403 in nakazilo ostane nespremenjeno.
+8. Urejanje uporablja enak obrazec in enaka pravila kot beleženje. Pred brisanjem sistem zahteva potrditev v pogovornem oknu. Po urejanju ali brisanju se stanja članov in predlagana nakazila takoj posodobijo.
 
 ## US-12: Pregled vseh skupin
 

@@ -10,7 +10,7 @@ Začetni zaslon po prijavi. Vsaka skupina je kartica z imenom in njegovim stanje
 
 ![WF-02 Stran skupine](wireframes/WF-02-stran-skupine.png)
 
-Glavni zaslon aplikacije, prikazan v pogledu skrbnika. Levo sta kartici s stanji vseh članov in s predlaganimi nakazili, pri katerih gumb "Zabeleži nakazilo" odpre beleženje nakazila. Desno je tabela stroškov z datumom, opisom, plačnikom, zneskom in mojim deležem ter gumbi "Nov strošek" in "Nakazilo". Akciji "Uredi" in "X" ima skrbnik pri vseh stroških, član pa samo pri svojih. Zavihki "Zgodovina", "Povzetek" in "Člani" vodijo na ostale preglede skupine.
+Glavni zaslon aplikacije, prikazan v pogledu skrbnika. Levo sta kartici s stanji vseh članov in s predlaganimi nakazili, pri katerih gumb "Zabeleži nakazilo" odpre beleženje nakazila. Desno je tabela stroškov z datumom, opisom, plačnikom, zneskom in mojim deležem ter gumbi "Nov strošek" in "Nakazilo". Akciji "Uredi" in "X" ima skrbnik pri vseh stroških, član pa samo pri svojih. Pod stroški je tabela zabeleženih nakazil z datumom, plačnikom, prejemnikom in zneskom. Tudi tu ima skrbnik akciji "Uredi" in "X" pri vseh nakazilih, član pa samo pri tistih, ki jih je plačal sam. "Uredi" odpre obrazec za nakazilo z izpolnjenimi podatki. Zavihki "Zgodovina", "Povzetek" in "Člani" vodijo na ostale preglede skupine.
 
 ## WF-03: Vnos stroška
 
