@@ -1,6 +1,6 @@
 <script setup>
 import { computed, reactive, ref } from 'vue'
-import { dodajNakazilo, pridobiClane } from '@/api/skupine'
+import { dodajNakazilo, pridobiClane, urediNakazilo } from '@/api/skupine'
 import { pravilaZneska, preberiZnesek, vnosZneska } from '@/utils/znesek'
 
 const props = defineProps({
@@ -12,6 +12,8 @@ const props = defineProps({
 const emit = defineEmits(['shranjeno'])
 
 const odprt = ref(false)
+const urejanoId = ref(null)
+const jeUrejanje = computed(() => urejanoId.value !== null)
 const clani = ref([])
 const nalozeniZa = ref(null)
 const nalaganje = ref(false)
@@ -73,11 +75,12 @@ async function naloziClane() {
   }
 }
 
-function odpri({ placnikId, prejemnikId, znesek } = {}) {
+function odpri({ id, placnikId, prejemnikId, znesek, datum } = {}) {
+  urejanoId.value = id ?? null
   podatki.placnikId = placnikId ?? props.mojeClanstvoId
   podatki.prejemnikId = prejemnikId ?? null
   podatki.znesek = znesek === undefined || znesek === null ? '' : vnosZneska(znesek)
-  podatki.datum = danes()
+  podatki.datum = datum ?? danes()
   for (const polje of Object.keys(napake)) {
     napake[polje] = []
   }
@@ -120,12 +123,17 @@ async function poslji() {
 
   posiljanje.value = true
   try {
-    await dodajNakazilo(props.skupinaId, {
+    const nakazilo = {
       placnikId: podatki.placnikId,
       prejemnikId: podatki.prejemnikId,
       znesek: preberiZnesek(podatki.znesek),
       datum: podatki.datum,
-    })
+    }
+    if (jeUrejanje.value) {
+      await urediNakazilo(props.skupinaId, urejanoId.value, nakazilo)
+    } else {
+      await dodajNakazilo(props.skupinaId, nakazilo)
+    }
     odprt.value = false
     emit('shranjeno')
   } catch (napaka) {
@@ -137,7 +145,11 @@ async function poslji() {
     if (errors) {
       nastaviNapakeIzApi(errors)
     } else if (status === 403) {
-      splosnaNapaka.value = 'Omejen član ne more beležiti nakazil.'
+      splosnaNapaka.value = jeUrejanje.value
+        ? 'Urejaš lahko samo nakazila, ki si jih plačal sam.'
+        : 'Omejen član ne more beležiti nakazil.'
+    } else if (status === 404 && jeUrejanje.value) {
+      splosnaNapaka.value = 'Nakazilo ne obstaja več.'
     } else {
       splosnaNapaka.value = 'Nakazila ni bilo mogoče shraniti. Preveri povezavo in poskusi znova.'
     }
@@ -152,7 +164,7 @@ defineExpose({ odpri })
 <template>
   <v-dialog v-model="odprt" max-width="480" :persistent="posiljanje">
     <v-card class="pa-6">
-      <h2 class="text-h6 font-weight-bold mb-4">Nakazilo</h2>
+      <h2 class="text-title-large font-weight-bold mb-4">{{ jeUrejanje ? 'Uredi nakazilo' : 'Nakazilo' }}</h2>
 
       <v-progress-linear v-if="nalaganje" indeterminate color="primary" />
 
@@ -215,7 +227,7 @@ defineExpose({ odpri })
 
         <div class="d-flex flex-wrap ga-3 mt-4">
           <v-btn type="submit" color="primary" size="large" :loading="posiljanje">
-            Shrani nakazilo
+            {{ jeUrejanje ? 'Shrani spremembe' : 'Shrani nakazilo' }}
           </v-btn>
           <v-btn variant="text" size="large" :disabled="posiljanje" @click="zapri">Prekliči</v-btn>
         </div>

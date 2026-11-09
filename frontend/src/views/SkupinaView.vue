@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { pridobiSkupino } from '@/api/skupine'
 import ClaniSkupine from '@/components/ClaniSkupine.vue'
+import NakazilaSkupine from '@/components/NakazilaSkupine.vue'
 import NakaziloDialog from '@/components/NakaziloDialog.vue'
 import PredlogNakazil from '@/components/PredlogNakazil.vue'
 import StanjaClanov from '@/components/StanjaClanov.vue'
@@ -66,7 +67,7 @@ watch(() => route.params.id, nalozi, { immediate: true })
     </v-alert>
 
     <template v-else-if="skupina">
-      <h1 class="text-h5 font-weight-bold mb-6">{{ skupina.ime }}</h1>
+      <h1 class="text-headline-small font-weight-bold mb-6">{{ skupina.ime }}</h1>
 
       <v-tabs v-model="zavihek" color="primary">
         <v-tab value="pregled">Pregled</v-tab>
@@ -100,6 +101,16 @@ watch(() => route.params.id, nalozi, { immediate: true })
                 @nakazilo="odpriNakazilo()"
                 @spremenjeno="osveziPregled"
               />
+              <div class="mt-8">
+                <NakazilaSkupine
+                  :skupina-id="skupina.id"
+                  :moje-clanstvo-id="skupina.clanstvoId"
+                  :moja-vloga="skupina.vloga"
+                  :osvezitev="osvezitev"
+                  @uredi="odpriNakazilo"
+                  @spremenjeno="osveziPregled"
+                />
+              </div>
             </v-col>
           </v-row>
         </v-window-item>

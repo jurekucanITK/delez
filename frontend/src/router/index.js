@@ -64,6 +64,9 @@ router.beforeEach((to) => {
   if (to.meta.zahtevaPrijavo && !avtentikacija.jePrijavljen) {
     return { name: 'prijava' }
   }
+  if (to.name === 'zacetna' && avtentikacija.jePrijavljen) {
+    return { name: 'skupine' }
+  }
 })
 
 export default router

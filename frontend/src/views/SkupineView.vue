@@ -44,7 +44,7 @@ onMounted(() => {
 <template>
   <v-container class="py-12">
     <div class="d-flex flex-wrap align-center justify-space-between ga-4 mb-8">
-      <h1 class="text-h5 font-weight-bold">Moje skupine</h1>
+      <h1 class="text-headline-small font-weight-bold">Moje skupine</h1>
       <v-btn color="primary" prepend-icon="mdi-plus" :to="{ name: 'nova-skupina' }">
         Nova skupina
       </v-btn>
@@ -57,7 +57,7 @@ onMounted(() => {
     </v-alert>
 
     <v-card v-else-if="skupine.length === 0" class="mx-auto pa-8 text-center" max-width="440">
-      <p class="text-body-1 mb-6">Še niste član nobene skupine</p>
+      <p class="text-body-large mb-6">Še niste član nobene skupine</p>
       <v-btn variant="tonal" color="primary" :to="{ name: 'nova-skupina' }">
         Ustvari skupino
       </v-btn>
@@ -71,14 +71,14 @@ onMounted(() => {
           :to="{ name: 'skupina', params: { id: skupina.id } }"
         >
           <div class="d-flex align-start justify-space-between ga-4">
-            <h2 class="text-h6 font-weight-bold">{{ skupina.ime }}</h2>
-            <span class="text-body-2 text-medium-emphasis">{{ imenaVlog[skupina.vloga] }}</span>
+            <h2 class="text-title-large font-weight-bold">{{ skupina.ime }}</h2>
+            <span class="text-body-medium text-medium-emphasis">{{ imenaVlog[skupina.vloga] }}</span>
           </div>
-          <p class="text-body-2 text-medium-emphasis mt-8">Moje stanje:</p>
-          <p class="text-h4 font-weight-bold" :class="barvaStanja(skupina.stanje)">
+          <p class="text-body-medium text-medium-emphasis mt-8">Moje stanje:</p>
+          <p class="text-headline-large font-weight-bold" :class="barvaStanja(skupina.stanje)">
             {{ oblikujStanje(skupina.stanje) }}
           </p>
-          <p class="text-body-2 text-medium-emphasis mt-1">{{ opisStanja(skupina.stanje) }}</p>
+          <p class="text-body-medium text-medium-emphasis mt-1">{{ opisStanja(skupina.stanje) }}</p>
         </v-card>
       </v-col>
 

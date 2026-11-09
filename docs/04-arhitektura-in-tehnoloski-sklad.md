@@ -20,7 +20,7 @@ Uporabljena je relacijska podatkovna baza PostgreSQL in se ustvari z migracijami
 
 Uporabnik se registrira z imenom, e-poštnim naslovom in geslom. Geslo se pred shranjevanjem zgosti z algoritmom BCrypt. Ob prijavi backend preveri geslo in vrne JWT žeton, ki ga frontend hrani in pošilja z vsakim zahtevkom.
 
-Avtorizacija poteka na ravni skupine. Ker so vloge vezane na članstvo, backend pri vsakem zahtevku, ki zadeva skupino, preveri, ali je uporabnik njen član in kakšno vlogo ima. Npr. brisanje tujega stroška je dovoljeno samo skrbniku, omejen član pa dobi samo stroške, v katerih ima delež.
+Avtorizacija poteka na ravni skupine. Ker so vloge vezane na članstvo, backend pri vsakem zahtevku, ki zadeva skupino, preveri, ali je uporabnik njen član in kakšno vlogo ima. Npr. brisanje tujega stroška ali nakazila je dovoljeno samo skrbniku, omejen član pa dobi samo stroške, v katerih ima delež.
 
 ### Lokalni zagon
 

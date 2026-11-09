@@ -6,11 +6,11 @@ Vloge se v Deležu dodeljujejo po skupinah. Ista oseba je lahko v eni skupini sk
 
 ### Skrbnik skupine
 
-Skrbnik je uporabnik, ki je skupino ustvaril ali mu je bila ta vloga dodeljena. Člane dodaja in odstranjuje, jim dodeljuje vloge ter lahko vnaša, ureja ali briše vse stroške v skupini, tudi v imenu drugih članov. Nima dostopa do skupin, v katerih ni član, in ne more spreminjati uporabniških računov drugih uporabnikov.
+Skrbnik je uporabnik, ki je skupino ustvaril ali mu je bila ta vloga dodeljena. Člane dodaja in odstranjuje, jim dodeljuje vloge ter lahko vnaša, ureja ali briše vse stroške in nakazila v skupini, tudi v imenu drugih članov. Nima dostopa do skupin, v katerih ni član, in ne more spreminjati uporabniških računov drugih uporabnikov.
 
 ### Član
 
-Član vnaša stroške, ki jih je plačal, vidi vse stroške in stanje vseh članov v skupini ter beleži svoja nakazila. Ureja in briše lahko samo stroške, ki jih je plačal sam. Ne more dodajati ali odstranjevati članov in ne more spreminjati vlog.
+Član vnaša stroške, ki jih je plačal, vidi vse stroške in stanje vseh članov v skupini ter beleži svoja nakazila. Ureja in briše lahko samo stroške in nakazila, ki jih je plačal sam. Ne more dodajati ali odstranjevati članov in ne more spreminjati vlog.
 
 ### Omejen član
 
@@ -23,7 +23,7 @@ Omejen član je namenjen npr. mlajšim družinskim članom ali začasnim sostano
 - **[MVP]** **[DS]** Enakomerna delitev stroška med izbrane člane, t.j. med vse ali samo med tiste, ki strošek koristijo.
 - **[MVP]** **[DS]** Sprotni izračun stanja vsakega člana, torej koliko je dolžan oz. koliko mu pripada.
 - **[MVP]** **[DS]** Predlog čim manjšega števila nakazil, s katerimi se poravnajo vsi dolgovi v skupini.
-- **[MVP]** **[DS]** Beleženje nakazila, ki se takoj upošteva pri stanju obeh članov.
+- **[MVP]** **[DS]** Beleženje nakazila, ki se takoj upošteva pri stanju obeh članov, ter urejanje in brisanje zabeleženih nakazil.
 - **[DS]** Delitev stroška po deležih, na primer 60 % in 40 %.
 - Skupni pregled vseh skupin uporabnika s stanjem v vsaki od njih.
 - **[DS]** Prilagojen pogled za omejenega člana, ki prikazuje samo stroške z njegovim deležem.

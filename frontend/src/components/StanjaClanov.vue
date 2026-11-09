@@ -47,7 +47,7 @@ watch(() => [props.skupinaId, props.osvezitev], nalozi, { immediate: true })
 
 <template>
   <v-card class="pa-6">
-    <h2 class="text-h6 font-weight-bold mb-2">Stanja članov</h2>
+    <h2 class="text-title-large font-weight-bold mb-2">Stanja članov</h2>
 
     <v-progress-linear
       :active="nalaganje"
@@ -73,7 +73,7 @@ watch(() => [props.skupinaId, props.osvezitev], nalozi, { immediate: true })
               <div class="text-no-wrap font-weight-bold" :class="barvaStanja(clan.stanje)">
                 {{ oblikujStanje(clan.stanje) }}
               </div>
-              <div class="text-caption text-medium-emphasis text-no-wrap">
+              <div class="text-body-small text-medium-emphasis text-no-wrap">
                 {{ opisStanja(clan.stanje) }}
               </div>
             </div>
