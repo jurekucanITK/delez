@@ -55,7 +55,7 @@ watch(() => [props.skupinaId, props.osvezitev], nalozi, { immediate: true })
 
 <template>
   <v-card class="pa-6">
-    <h2 class="text-h6 font-weight-bold mb-2">Predlagana nakazila</h2>
+    <h2 class="text-title-large font-weight-bold mb-2">Predlagana nakazila</h2>
 
     <v-progress-linear
       :active="nalaganje"
@@ -70,7 +70,7 @@ watch(() => [props.skupinaId, props.osvezitev], nalozi, { immediate: true })
 
     <div
       v-else-if="!nalaganje && predlog.length === 0"
-      class="text-body-2 text-medium-emphasis py-2"
+      class="text-body-medium text-medium-emphasis py-2"
     >
       Vse je poravnano
     </div>

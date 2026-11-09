@@ -67,7 +67,7 @@ watch(() => route.params.id, nalozi, { immediate: true })
     </v-alert>
 
     <template v-else-if="skupina">
-      <h1 class="text-h5 font-weight-bold mb-6">{{ skupina.ime }}</h1>
+      <h1 class="text-headline-small font-weight-bold mb-6">{{ skupina.ime }}</h1>
 
       <v-tabs v-model="zavihek" color="primary">
         <v-tab value="pregled">Pregled</v-tab>

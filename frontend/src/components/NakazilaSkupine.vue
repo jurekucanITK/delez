@@ -93,7 +93,7 @@ watch(() => [props.skupinaId, props.osvezitev], nalozi, { immediate: true })
 </script>
 
 <template>
-  <h2 class="text-h6 font-weight-bold mb-4">Nakazila</h2>
+  <h2 class="text-title-large font-weight-bold mb-4">Nakazila</h2>
 
   <v-card>
     <v-progress-linear v-if="nalaganje && nakazila.length === 0" indeterminate color="primary" />
@@ -102,7 +102,7 @@ watch(() => [props.skupinaId, props.osvezitev], nalozi, { immediate: true })
       {{ napakaNalaganja }}
     </v-alert>
 
-    <div v-else-if="nakazila.length === 0" class="pa-6 text-body-2 text-medium-emphasis">
+    <div v-else-if="nakazila.length === 0" class="pa-6 text-body-medium text-medium-emphasis">
       Ni še nakazil.
     </div>
 
@@ -149,8 +149,8 @@ watch(() => [props.skupinaId, props.osvezitev], nalozi, { immediate: true })
 
   <v-dialog v-model="potrditevOdprta" max-width="420" :persistent="brisanje">
     <v-card v-if="zaBrisanje" class="pa-6">
-      <h2 class="text-h6 font-weight-bold mb-2">Izbriši nakazilo?</h2>
-      <p class="text-body-2 mb-4">
+      <h2 class="text-title-large font-weight-bold mb-2">Izbriši nakazilo?</h2>
+      <p class="text-body-medium mb-4">
         Nakazilo od {{ zaBrisanje.placnikIme }} za {{ zaBrisanje.prejemnikIme }} v znesku
         {{ prikaziZnesek(zaBrisanje.znesek) }} bo izbrisano. Stanja se bodo preračunala.
       </p>

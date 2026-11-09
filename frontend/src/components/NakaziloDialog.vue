@@ -164,7 +164,7 @@ defineExpose({ odpri })
 <template>
   <v-dialog v-model="odprt" max-width="480" :persistent="posiljanje">
     <v-card class="pa-6">
-      <h2 class="text-h6 font-weight-bold mb-4">{{ jeUrejanje ? 'Uredi nakazilo' : 'Nakazilo' }}</h2>
+      <h2 class="text-title-large font-weight-bold mb-4">{{ jeUrejanje ? 'Uredi nakazilo' : 'Nakazilo' }}</h2>
 
       <v-progress-linear v-if="nalaganje" indeterminate color="primary" />
 

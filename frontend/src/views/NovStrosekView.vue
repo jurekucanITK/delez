@@ -249,7 +249,7 @@ watch(() => [route.params.id, route.params.strosekId], nalozi, { immediate: true
         </v-alert>
 
         <template v-else-if="skupina">
-          <h1 class="text-h5 font-weight-bold mb-6">
+          <h1 class="text-headline-small font-weight-bold mb-6">
             {{ jeUrejanje ? 'Uredi strošek' : 'Nov strošek' }}
           </h1>
 
@@ -315,8 +315,8 @@ watch(() => [route.params.id, route.params.strosekId], nalozi, { immediate: true
 
               <v-col cols="12" md="6">
                 <v-card class="pa-6">
-                  <h2 class="text-h6 font-weight-bold mb-1">Delitev stroška</h2>
-                  <p class="text-body-2 text-medium-emphasis mb-2">
+                  <h2 class="text-title-large font-weight-bold mb-1">Delitev stroška</h2>
+                  <p class="text-body-medium text-medium-emphasis mb-2">
                     Med koga se strošek deli
                   </p>
 
@@ -354,7 +354,7 @@ watch(() => [route.params.id, route.params.strosekId], nalozi, { immediate: true
                   <v-sheet
                     color="surface-variant"
                     rounded="lg"
-                    class="d-flex justify-space-between px-4 py-3 mt-4 text-body-2"
+                    class="d-flex justify-space-between px-4 py-3 mt-4 text-body-medium"
                   >
                     <span>Vsota deležev</span>
                     <span class="font-weight-bold">{{ vsotaDelezev }}</span>

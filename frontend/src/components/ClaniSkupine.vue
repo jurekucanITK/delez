@@ -109,7 +109,7 @@ watch(() => props.skupinaId, nalozi, { immediate: true })
   <v-row>
     <v-col cols="12" :md="jeSkrbnik ? 7 : 8">
       <v-card class="pa-6">
-        <h2 class="text-h6 font-weight-bold mb-2">Člani</h2>
+        <h2 class="text-title-large font-weight-bold mb-2">Člani</h2>
 
         <v-progress-linear v-if="nalaganje" indeterminate color="primary" class="my-4" />
 
@@ -124,7 +124,7 @@ watch(() => props.skupinaId, nalozi, { immediate: true })
               <v-list-item-title class="font-weight-bold">{{ clan.ime }}</v-list-item-title>
               <v-list-item-subtitle>{{ clan.email }}</v-list-item-subtitle>
               <template #append>
-                <span class="text-body-2 text-medium-emphasis">{{ imenaVlog[clan.vloga] }}</span>
+                <span class="text-body-medium text-medium-emphasis">{{ imenaVlog[clan.vloga] }}</span>
               </template>
             </v-list-item>
           </template>
@@ -134,8 +134,8 @@ watch(() => props.skupinaId, nalozi, { immediate: true })
 
     <v-col v-if="jeSkrbnik" cols="12" md="5">
       <v-card class="pa-6">
-        <h2 class="text-h6 font-weight-bold mb-2">Dodaj člana</h2>
-        <p class="text-body-2 text-medium-emphasis mb-6">
+        <h2 class="text-title-large font-weight-bold mb-2">Dodaj člana</h2>
+        <p class="text-body-medium text-medium-emphasis mb-6">
           Vpiši e-poštni naslov, s katerim je oseba registrirana v Delež.
         </p>
 

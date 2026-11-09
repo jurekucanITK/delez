@@ -99,7 +99,7 @@ watch(
 
 <template>
   <div class="d-flex align-center justify-space-between flex-wrap ga-3 mb-4">
-    <h2 class="text-h6 font-weight-bold">Stroški</h2>
+    <h2 class="text-title-large font-weight-bold">Stroški</h2>
     <div v-if="lahkoVnasa" class="d-flex flex-wrap ga-2">
       <v-btn
         color="primary"
@@ -119,7 +119,7 @@ watch(
       {{ napakaNalaganja }}
     </v-alert>
 
-    <div v-else-if="stroski.length === 0" class="pa-6 text-body-2 text-medium-emphasis">
+    <div v-else-if="stroski.length === 0" class="pa-6 text-body-medium text-medium-emphasis">
       Ni še stroškov.
       <template v-if="lahkoVnasa">Prvega dodaj z gumbom Nov strošek.</template>
     </div>
@@ -171,8 +171,8 @@ watch(
 
   <v-dialog v-model="potrditevOdprta" max-width="420" :persistent="brisanje">
     <v-card v-if="zaBrisanje" class="pa-6">
-      <h2 class="text-h6 font-weight-bold mb-2">Izbriši strošek?</h2>
-      <p class="text-body-2 mb-4">
+      <h2 class="text-title-large font-weight-bold mb-2">Izbriši strošek?</h2>
+      <p class="text-body-medium mb-4">
         Strošek „{{ zaBrisanje.opis }}“ v znesku {{ prikaziZnesek(zaBrisanje.znesek) }} bo izbrisan
         skupaj z deleži vseh članov. Stanja se bodo preračunala.
       </p>

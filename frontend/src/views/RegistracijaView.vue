@@ -65,8 +65,8 @@ async function poslji() {
     <v-row justify="center">
       <v-col cols="12" sm="9" md="6" lg="5" xl="4">
         <v-card class="pa-6 pa-sm-8">
-          <h1 class="text-h5 font-weight-bold mb-2">Ustvari račun</h1>
-          <p class="text-body-2 text-medium-emphasis mb-6">
+          <h1 class="text-headline-small font-weight-bold mb-2">Ustvari račun</h1>
+          <p class="text-body-medium text-medium-emphasis mb-6">
             Z računom vodiš skupne stroške, drugi pa te lahko dodajo v svoje skupine.
           </p>
 
@@ -112,7 +112,7 @@ async function poslji() {
             </v-btn>
           </v-form>
 
-          <p class="text-body-2 text-center mt-6">
+          <p class="text-body-medium text-center mt-6">
             Že imaš račun?
             <router-link :to="{ name: 'prijava' }" class="text-primary font-weight-bold">
               Prijavi se
