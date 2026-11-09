@@ -3,6 +3,7 @@
 ## US-01: Registracija
 
 **Funkcionalnost:** Ustvarjanje skupine in dodajanje registriranih uporabnikov
+
 **Vloga:** Uporabnik
 
 **Zgodba:** Kot obiskovalec želim ustvariti uporabniški račun, da lahko začnem uporabljati aplikacijo in me drugi lahko dodajo v svoje skupine.
@@ -32,6 +33,7 @@
 ## US-03: Ustvarjanje skupine
 
 **Funkcionalnost:** Ustvarjanje skupine
+
 **Vloga:** Uporabnik
 
 **Zgodba:** Kot prijavljen uporabnik želim ustvariti novo skupino za svoje gospodinjstvo, da lahko z drugimi člani začnemo beležiti skupne stroške.
@@ -47,6 +49,7 @@
 ## US-04: Dodajanje člana v skupino
 
 **Funkcionalnost:** Dodajanje registriranih uporabnikov prek e-poštnega naslova z dodelitvijo vloge
+
 **Vloga:** Skrbnik skupine
 
 **Zgodba:** Kot skrbnik skupine želim dodati registriranega uporabnika prek njegovega e-poštnega naslova in mu dodeliti vlogo, da lahko sodeluje pri deljenju stroškov.
@@ -63,6 +66,7 @@
 ## US-05: Vnos stroška
 
 **Funkcionalnost:** Vnos stroška z zneskom, opisom, datumom in članom, ki ga je plačal
+
 **Vloga:** Član
 
 **Zgodba:** Kot član skupine želim vnesti strošek, ki sem ga plačal, da ostali člani vidijo, koliko mi dolgujejo.
@@ -78,6 +82,7 @@
 ## US-06: Enakomerna delitev stroška
 
 **Funkcionalnost:** Enakomerna delitev stroška med izbrane člane
+
 **Vloga:** Član
 
 **Zgodba:** Kot član skupine želim strošek enakomerno razdeliti med člane, ki ga koristijo, da vsak plača pošten del in tisti, ki stroška ne koristijo, ne nosijo ničesar.
@@ -93,6 +98,7 @@
 ## US-07: Delitev stroška po deležih
 
 **Funkcionalnost:** Delitev stroška po deležih, na primer 60 % in 40 %
+
 **Vloga:** Član
 
 **Zgodba:** Kot član skupine želim strošek razdeliti po odstotkih, da lahko upoštevam, da nekateri člani strošek koristijo več kot drugi.
@@ -108,6 +114,7 @@
 ## US-08: Urejanje in brisanje stroška
 
 **Funkcionalnost:** Vnos stroška (upravljanje stroškov)
+
 **Vloga:** Član, skrbnik skupine
 
 **Zgodba:** Kot član skupine želim popraviti ali izbrisati strošek, ki sem ga vnesel, da odpravim napake v vnosu.
@@ -123,6 +130,7 @@
 ## US-09: Pregled stanja članov
 
 **Funkcionalnost:** Sprotni izračun stanja vsakega člana
+
 **Vloga:** Član
 
 **Zgodba:** Kot član skupine želim videti, koliko je kdo dolžan oz. koliko mu pripada, da imamo vsi pregled nad dolgovi v gospodinjstvu.
@@ -138,13 +146,14 @@
 ## US-10: Predlog poravnave dolgov
 
 **Funkcionalnost:** Predlog čim manjšega števila nakazil, s katerimi se poravnajo vsi dolgovi v skupini
+
 **Vloga:** Član
 
 **Zgodba:** Kot član skupine želim videti predlog nakazil, s katerimi se poravnajo vsi dolgovi, da dolgove poravnamo z najmanj plačili.
 
 **Acceptance criteria:**
 
-1. Na strani skupine je prikazan seznam predlaganih nakazil v obliki "A → B: znesek", urejen po znesku padajoče.
+1. Na strani skupine je prikazan seznam predlaganih nakazil v obliki "A --> B: znesek", urejen po znesku padajoče.
 2. Če bi vsa predlagana nakazila bila izvedena, bi bilo stanje vseh članov 0,00 €.
 3. Število predlaganih nakazil je največ n − 1, kjer je n število članov z neničelnim stanjem (npr. pri treh članih z neničelnim stanjem največ 2 nakazili).
 4. Če so vsa stanja 0,00 €, se namesto seznama prikaže sporočilo "Vse je poravnano".
@@ -153,6 +162,7 @@
 ## US-11: Beleženje nakazila
 
 **Funkcionalnost:** Beleženje nakazila, ki se takoj upošteva pri stanju obeh članov
+
 **Vloga:** Član
 
 **Zgodba:** Kot član skupine želim zabeležiti nakazilo, ki sem ga opravil drugemu članu, da se moj dolg zmanjša in drugi člani vidijo, da sem ga poravnal.
@@ -171,6 +181,7 @@
 ## US-12: Pregled vseh skupin
 
 **Funkcionalnost:** Skupni pregled vseh skupin uporabnika s stanjem v vsaki od njih
+
 **Vloga:** Uporabnik
 
 **Zgodba:** Kot uporabnik, ki je član več skupin, želim na enem mestu videti vse svoje skupine in svoje stanje v vsaki, da hitro vidim, kje sem dolžan oziroma kje mi dolgujejo.
@@ -186,6 +197,7 @@
 ## US-13: Pogled omejenega člana
 
 **Funkcionalnost:** Prilagojen pogled za omejenega člana, ki prikazuje samo stroške z njegovim deležem
+
 **Vloga:** Omejen član
 
 **Zgodba:** Kot omejen član želim videti samo stroške, pri katerih imam delež, in svoje stanje, da vem, koliko moram prispevati, ne da bi videl finance ostalih.
@@ -201,6 +213,7 @@
 ## US-14: Zgodovina s filtriranjem
 
 **Funkcionalnost:** Zgodovina stroškov in nakazil s filtriranjem po obdobju in članu
+
 **Vloga:** Član
 
 **Zgodba:** Kot član skupine želim pregledati zgodovino stroškov in nakazil ter jo filtrirati po obdobju in članu, da lahko preverim, kaj se je zgodilo v določenem času ali s posameznim članom.
@@ -216,6 +229,7 @@
 ## US-15: Mesečni povzetek
 
 **Funkcionalnost:** Mesečni povzetek, ki prikaže, koliko je skupina in posamezen član porabil v izbranem mesecu
+
 **Vloga:** Član
 
 **Zgodba:** Kot član skupine želim videti mesečni povzetek porabe, da vem, koliko smo kot skupina in koliko sem jaz porabil v izbranem mesecu.
